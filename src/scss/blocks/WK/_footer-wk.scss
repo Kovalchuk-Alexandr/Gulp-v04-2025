@@ -1,0 +1,26 @@
+.footer {
+	background-color: rgb(39, 39, 39);
+	padding: 50px 0;
+	font-size: 32px;
+    color: #fff;
+
+	h1 {
+		font-size: 32px;
+	}
+
+	a {
+		// color: var(--link-color);
+		color: #fff;
+		text-decoration: underline;
+	}
+
+	@media (max-width: 1200px) {
+		font-size: 26px;
+	}
+}
+
+.footer__copyright {
+	padding: 10px 0;
+	font-size: 16px;
+
+}

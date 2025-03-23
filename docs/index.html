@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Стартовый шаблон</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+
+	<link rel="icon" type="image/x-icon" href="./img/favicons/favicon.svg">
+	<link rel="apple-touch-icon" sizes="180x180" href="./img/favicons/apple-touch-icon.webp">
+</head>
+
+<body>
+	 <nav class="nav">
+    <div class="container">
+        <div class="nav__row">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="#!" class="nav__link">Home</a></li>
+                <li class="nav__item"><a href="#!" class="nav__link">About</a></li>
+                <li class="nav__item"><a href="#!" class="nav__link">Services</a></li>
+                <li class="nav__item"><a href="#!" class="nav__link">Contact</a></li>
+            </ul>
+            <a href="#!" class="nav__logo">
+                <img src="./img/logo.svg" alt="Logo">
+            </a>
+
+            <div class="nav__btn-set">
+                <button class="nav__btn ">
+                    <a href="#!" class="btn">Book</a>
+                </button>
+
+                <!-- Mobile button open -->
+                <!-- <button class="mobile-nav-btn">
+                    <div class="mobile-nav-btn__icon"> -->
+                        <!-- Если используются разные кнопки для откр/закр -->
+                        <!-- <img class="nav-img" src="./img/ui/menu_right.svg" alt="Menu button" > -->
+                    <!-- </div>
+                </button> -->
+            </div>
+        </div>
+    </div>
+</nav>
+	<header class="header ">
+    <div class="container">
+        <div class="header__grid">
+            <div class="header__col">
+                <div class="scroll-text scroll-text__bullet-left">Scroll to discover</div>
+            </div>
+
+            <div class="header__content">
+                <div class="header__desc">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque augue eros, pellentesque nec tempor eu, sollicitudin at dolor. Cras commodo venenatis diam, nec venenatis massa auctor at.
+                    </p>
+                </div>
+            </div>
+
+            <div class="header__col">
+                <div class="scroll-text scroll-text__bullet-right">Scroll to discover</div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+	<!-- Mobile button open -->
+<button class="mobile-nav-btn">
+	<div class="mobile-nav-btn__icon">
+		<!-- Если используются разные кнопки для откр/закр -->
+		<!-- <img class="nav-img" src="./img/ui/menu_right.svg" alt="Menu button" > -->
+	</div>
+</button>
+	<!-- ======= Мобильная навигация  ============================ -->
+<div class="mobile-nav ">
+	<!-- Если используются разные кнопки для откр/закр -->
+	<!-- <button class="mobile-close-btn">
+		<img src="./img/ui/close_round.svg" alt="Close button" width="24" height="24">
+	</button> -->
+
+		<div class="nav__btn-set">
+		<button class="nav__btn">
+			<a href="#!" class="btn">Book</a>
+		</button>
+
+		<!-- Mobile button open -->
+		<!-- <button class="mobile-nav-btn">
+			<div class="mobile-nav-btn__icon"></div>
+		</button> -->
+	</div>
+
+	<ul class="mobile-nav-list">
+		<li class="mobile-nav-item"><a href="#!" class="mobile-nav-link">Home</a></li>
+		<li class="mobile-nav-item"><a href="#!" class="mobile-nav-link">About</a></li>
+		<li class="mobile-nav-item"><a href="#!" class="mobile-nav-link">Services</a></li>
+		<li class="mobile-nav-item"><a href="#!" class="mobile-nav-link">Contact</a></li>
+	</ul>
+
+	<a href="#!" class="nav__logo">
+		<img src="./img/logo.svg" alt="Logo Powfections">
+	</a>
+</div>
+
+<!-- ======= Fade для мобильной навигации  =================== -->
+<div class="mobile-nav-fade"></div>
+	<main class="docs">
+		<section>
+			<div class="container">
+				<h1 class="title-1">Gulp сборка для верстки сайтов</h1>
+				<p>Понятная Gulp сборка которая ускорит твою верстку в разы.</p>
+				<p>Документация по возможностям с примерами использования <a href="./docs.html">здесь</a>.</p>
+				<img  src="./img/project-02.webp" srcset="./img/project-02@2x.webp" alt="">	
+			</div>
+		</section>
+		<div class="swiper-slider">
+    <!-- Slider main container -->
+    <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide">
+                <div class="swiper-slide-text"> Slide 1</div>
+                <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <div class="swiper-slide-text"> Slide 2</div>
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <div class="swiper-slide-text"> Slide 3</div>
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <div class="swiper-slide-text"> Slide 4</div>
+                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <div class="swiper-slide-text"> Slide 5</div>
+                <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <div class="swiper-slide-text"> Slide 6</div>
+                <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+            </div>
+        </div>
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- Navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+        <!-- Scrollbar -->
+        <!-- <div class="swiper-scrollbar"></div> -->
+    </div>
+</div>
+	</main>
+	 <footer class="footer ">
+	<div class="container">
+		<div class="footer__content">
+			<div class="footer__logo">
+				<img src="./img/footer/footer-logo.svg" alt="Footer logo">
+			</div>
+			<div class="footer__nav-wrapper">
+				<div class="footer__nav">
+					<h3 class="footer__nav-title">Menu</h3>
+					<ul class="footer__nav-list">
+						<li class="footer__nav-item"><a href="#!" class="footer__nav-link">Home</a></li>
+						<li class="footer__nav-item"><a href="#!" class="footer__nav-link">About</a></li>
+						<li class="footer__nav-item"><a href="#!" class="footer__nav-link">Services</a></li>
+						<li class="footer__nav-item"><a href="#!" class="footer__nav-link">Contact</a></li>
+					</ul>
+				</div>
+
+				<div class="footer__nav">
+					<h3 class="footer__nav-title">contact</h3>
+					<ul class="footer__nav-list">
+						<li class="footer__nav-item">Pawfections@contact.com</li>
+						<li class="footer__nav-item">+012-345-6789</li>
+						<li class="footer__nav-item">9889 Lorem Ipsum street, Pellentesque, CA, USA</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer__copyright">
+			<p class="footer__copyright-text">Copyright Dotcreativemarket</p>
+			<ul class="footer__copyright-list">
+				<li class="footer__copyright-item"><a href="#!" class="footer__copyright-link">Terms of Use</a></li>
+				<li class="footer__copyright-item"><a href="#!" class="footer__copyright-link">Privacy Policy</a></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+	<script src="./js/index.bundle.js"></script>
+    <!-- <script src="./../js/main.min.js"></script> -->
+</body>
+
+</html>

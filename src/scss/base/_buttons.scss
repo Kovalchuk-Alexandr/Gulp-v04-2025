@@ -1,0 +1,35 @@
+.btn {
+    padding: 17px 36px 16px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50px;
+    min-width: 150px;
+    height: 50px;
+
+    background: var(--efbd68);
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--333333);
+
+    transition: all 0.3s ease-in;
+}
+
+.btn:hover {
+    color: #fff;
+    background-color:var(--333333);
+}
+
+@media (max-width: 480px) {
+    .btn {
+        padding: unset;
+        padding: 11px 21px 12px;
+        min-width: 120px;
+        height: 40px;
+    }
+}

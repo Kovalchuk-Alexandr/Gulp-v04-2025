@@ -1,0 +1,35 @@
+/* =============  Fonts ================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* =============  Base ================= */
+@import './base/reset';
+@import './base/vars';
+@import './base/mixins';
+@import './base/fontsAutoGen';
+@import './base/base';
+@import './base/docs'; /* Отключить при необходимости */
+@import './base/utils'; // Тест на ошибку
+@import './base/containers';
+@import './base/buttons';
+@import './base/mobile-nav-btn';
+@import './base/mobile-nav';
+@import './base/sticky-footer';
+@import './base/swiper-slider';
+
+/* =============  Blocks ================= */
+// @import './blocks/*.scss';
+@import './blocks/header';
+@import './blocks/footer';
+@import './blocks/logo';
+@import './blocks/icons';
+// @import './blocks/mobile-nav';
+// @import './blocks/nav-icon';
+@import './blocks/nav';
+@import './blocks/titles';
+
+/* =============  Media ================= */
+/* @import './base/media.css'; */
+
+/* No styles code below. Only in modules */
+/* Не пишите CSS код ниже. Только в подключаемых файлах */

@@ -1,0 +1,26 @@
+:root {
+	--container-width : 1440px;
+	--container-padding: 120px;
+
+	--font-main: 'CircularStd', sans-serif;
+	--font-accent: 'Inter', sans-serif;
+	--font-titles: var(--font-main);
+
+	--page-bg: #fff;
+	--text-color: #181818;
+	--text-white:  #fff;
+	--text-muted: #909090;
+
+	--accent: #35aff4;
+	--link-color: #2578c8;
+
+
+    --laptop-size: 1199px;
+	--tablet-size: 1050px;
+	--mobile-size: 700px;
+}
+
+.dark {
+    --page-bg: #252526;
+    --text-color: #fff;
+}

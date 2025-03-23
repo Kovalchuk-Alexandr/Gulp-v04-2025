@@ -1,0 +1,135 @@
+:root {
+--time: 0.1s;
+
+	--width: 40px;
+	--height: 30px;
+
+	--line-height: 2px;
+	--spacing: 6px;
+
+	--color: #000;
+	--radius: 4px;
+}
+
+.mobile-nav-btn {
+	/* Reset for button */
+	cursor: pointer;
+	padding: 0;
+	border: none;
+	background: transparent;
+
+	/* Nav icon styles*/
+	position: absolute;
+	top: 4.2%;
+	right: 5%;
+	z-index: 999;
+
+	/* Fixed height and width */
+	/* height: var(--height); */
+	/* width: var(--width); */
+
+	/* Dynamic height and width */
+	height: calc(var(--line-height) * 3 + var(--spacing) * 2);
+	width: var(--width);
+	/* width: 42px;
+	height: 18px; */
+	
+	/* display: flex; */
+	justify-content: end;
+	align-items: center;
+	display: none;
+}
+
+.mobile-close-btn {
+    position: absolute;
+	top: 3%;
+	right: 5%;
+	z-index: 999;
+	width: 40px;
+	height: 40px;
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
+    display: none;
+}
+
+@media (max-width: 480px){
+	/* Если используются разные иконки/кнопки для окр/закр */
+    /* .mobile-nav-btn:not(.active) {display: flex;} */
+	.mobile-close-btn {display: block;}
+
+    .mobile-nav-btn {
+        display: flex;
+    }
+}
+
+/* =============  Nav Icon  ================================== */
+.mobile-nav-btn__icon {
+	position: relative;
+	display: block;
+	/* width: 42px;
+	height: 1px;
+	background-color:  #000; */
+
+	width: var(--width);
+	height: var(--line-height);
+	background-color: var(--color);
+	border-radius: var(--radius);
+}
+
+.mobile-nav-btn__icon::after,
+.mobile-nav-btn__icon::before {
+	content: '';
+
+	position: absolute;
+	left: 0;
+
+	/* width: 42px;
+	height: 1px; 
+	background-color:  #000;*/
+
+	width: var(--width);
+	height: var(--line-height);
+
+	border-radius: var(--radius);
+	background-color: var(--color);
+
+    /* Трансформация при закрывании */
+	/* transition: transform 0.15s ease-in, top 0.15s ease-in 0.15s; */
+	transition: transform var(--time) ease-in,
+		top var(--time) linear var(--time);
+}
+
+.mobile-nav-btn__icon::before {
+	/* top: -10px; */
+	/* top: calc(var(--line-height) * -2); */
+	top: calc(-1 * (var(--line-height) + var(--spacing)));
+}
+
+.mobile-nav-btn__icon::after {
+	/* top: 10px; */
+	/* top: calc(var(--line-height) * 2); */
+	top: calc(var(--line-height) + var(--spacing));
+}
+
+.mobile-nav-btn__icon.active {
+	background-color: transparent;
+}
+
+.mobile-nav-btn__icon.active::before,
+.mobile-nav-btn__icon.active::after {
+	
+	top: 0;
+    /* Трансформация при открывании */
+	/* transition: top 0.15s linear, transform 0.15s ease-in 0.15s; */
+	transition: top var(--time) linear,
+		transform var(--time) ease-in var(--time);
+}
+
+.mobile-nav-btn__icon.active::before {
+	transform: rotate(45deg);
+}
+
+.mobile-nav-btn__icon.active::after {
+	transform: rotate(-45deg);
+}

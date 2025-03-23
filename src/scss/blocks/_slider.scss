@@ -1,0 +1,122 @@
+.section-slider {
+    margin-top: 24px;
+    margin-bottom: 120px;
+}
+
+.swiper-slide.slide-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slide-item__img {
+    height: 262px;
+    margin-bottom: 46px;
+}
+
+.slide-item__text {
+    margin-bottom: 31px;
+    max-width: 1097px;
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 200%;
+    text-align: center;
+    color: var(--333333);
+}
+
+.slide-item__name {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 125%;
+    text-transform: capitalize;
+    text-align: center;
+    color: var(--333333);
+}
+
+/* Swiper */
+:root {
+    --swiper-pagination-bullet-horizontal-gap: 8px;
+    --swiper-pagination-bullet-size: 12px;
+    --swiper-pagination-bullet-inactive-color: var(--333333);
+    --swiper-pagination-bullet-inactive-opacity: .9;
+    --swiper-pagination-color: var(--efbd68);
+
+}
+
+.swiper-pagination{ display: none;}
+
+.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
+    opacity: .95 !important;
+    color: var(--333333) !important;
+}
+
+.swiper-button-prev, .swiper-rtl .swiper-button-next,
+.swiper-button-next, .swiper-rtl .swiper-button-prev {
+    color: var(--efbd68) !important;
+}
+
+@media (max-width: 1240px) {
+    .slide-item__text {max-width: 707px;}
+}
+
+@media (max-width: 860px) {
+    :root {
+        --swiper-navigation-top-offset: 24%;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-slider {
+        margin-top: 0px;
+        margin-bottom: 80px;
+    }
+
+    .slide-item__img {
+        margin-bottom: 26px;
+    }
+
+    .slide-item__text {margin-bottom: 20px;}
+
+    .slide-item__name {
+        font-size: 26px;
+        line-height: 154%;
+    }
+}
+
+@media (max-width: 550px) {
+    :root {
+        --swiper-pagination-bottom: 0px;
+    }
+
+    .section-slider {
+        margin-bottom: 60px;
+    }
+
+    .swiper-slide.slide-item {padding-bottom: 38px;}
+
+    .slide-item__img {
+        margin-bottom: 16px;
+        height: 188px;
+    }
+
+    .slide-item__text {
+        margin-bottom: 8px;
+        font-size: 14px;
+        line-height: 186%;
+    }
+
+    .slide-item__name {
+        font-size: 16px;
+        line-height: 162%;
+    }
+
+    .swiper-pagination{ display: block;}
+}
+
+@media (max-width: 440px) {
+    .swiper-button-prev,
+    .swiper-button-next {display: none !important;}
+}

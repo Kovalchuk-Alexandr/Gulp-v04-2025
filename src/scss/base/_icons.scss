@@ -1,0 +1,46 @@
+.icons-wrapper {
+	padding: 30px 0;
+	display: flex;
+	column-gap: 30px;
+}
+
+.icon, .icon-decor {
+	fill: transparent;
+	stroke: transparent;
+	/* width: 62px;*/
+	height: 262px; 
+}
+
+.icon-decor {}
+
+.icon--cat-01 {
+	aspect-ratio: 1.082;
+	/* width: 264px; */
+	/* height: 244px; */
+}
+
+.icon--cat-02 {
+	aspect-ratio: 1.187;
+	/* width: 286px; */
+	/* height: 241px; */
+}
+
+.icon--cat-03 {
+	aspect-ratio: 1.004;
+	/* width: 248px; */
+	/* height: 247px; */
+}
+
+.icon--doggy {
+	aspect-ratio: 0.947;
+	/* width: 248px; */
+	/* height: 262px; */
+}
+
+@media (max-width: 550px) {
+	.icon{
+		/* width: 178px; */
+		height: 188px;
+	}
+}
+

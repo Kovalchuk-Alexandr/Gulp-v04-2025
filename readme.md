@@ -1,29 +1,53 @@
-# Desire - GULP - mobile
+# Gulp сборка для верстки сайтов
 
-## Верстка шестистраничного сайта на Gulp сборке. HTML, SCSS, JS, slick-carousel slider, Fancybox, mixItUP. Мобильная адаптация.
+## Обновленная версия 2025 / 03 с заменой task на function
+
+### Предустановки
 
 - HTML,
 - SCSS,
 - Gulp, file-include
 - JS,
-- Slick-carousel slider
-- mixItUP - манипуляция, фильтр, сортировка DOM
-- Fancybox
+- Swiper slider
+- Scrollreveal
 - Мобильная адаптация
+- Возможность указать каталог сборки build / docs (по-умолчанию docs)
 
-Установить зависимости:
+##### Установить зависимости:
 ```
 npm i
 ```
 
-Зпустить в режиме разработки:
+##### Зпустить в режиме разработки:
 ```
 gulp
 ```
 
-Собрать версию для публикации:
+##### Собрать версию для публикации:
 ```
-gulp docs
+gulp build
 ```
 
-[Смотреть демо](https://kovalchuk-alexandr.github.io/Desire/)
+#### Fonts
+
+Конвертация шрифтов OTF->TTF, TTF->WOFF, WOFF->WOFF2 с копией в `src/fonts`. Если, только WOFF/Woff2 - копируются в `build`
+
+Все шрифты автоматически собираются в "src\scss\base\_fontsAutoGen.scss".
+При этом, важно! Название - плотность - курсив разделять пробелами
+- `Montserrat-Bold-Italic.ttf`
+- `Inter-Regular.ttf`
+
+При подключении только внешних шрифтов, `src/fonts` оставить пустым
+
+#### Important!!!
+
+##### Styles
+
+`- npm i sass@1.77.8` - последняя версия позволяющий работать с `@import` в SCSS
+
+##### Images
+
+Обязательно добавить `{ encoding: false }` в путь источника, т.к. начиная с GULP 5.0 изображение по-умолчанию передается текстовой строкой
+```.pipe(src(path.source.img, { encoding: false }))```
+
+[GitHub сборка:](https://github.com/Kovalchuk-Alexandr/Gulp-v04-2025.git)

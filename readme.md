@@ -50,4 +50,30 @@ gulp build
 Обязательно добавить `{ encoding: false }` в путь источника, т.к. начиная с GULP 5.0 изображение по-умолчанию передается текстовой строкой
 ```.pipe(src(path.source.img, { encoding: false }))```
 
+>[`gulp-picture-html`](https://github.com/WpWebr/gulp-picture-html) - расширение для Gulp, заменит элемент html `<img>` на `<picture>`
+
+###### Например 
+```
+// Изменяет тэг 'img'
+  <img src="img/image.jpg" alt="image">
+``` 
+
+```
+// на 'picture'
+<picture>
+    <source srcset="img/image.avif" type="image/avif">
+    <source srcset="img/image.webp" type="image/webp">
+    <img src="img/image.jpg" alt="image">
+</picture>
+```
+
+Чтобы не делать преобразование - добавить `class="no-picture"` к тэгу `<img>`
+Убрать все  `class="no-picture"` из тэгов `<img>` - установить в `gulpfile.js`:
+
+```
+const pictureHTMLConfig = {
+    noPictureDel: true
+};
+```
+
 [GitHub сборка:](https://github.com/Kovalchuk-Alexandr/Gulp-v04-2025.git)

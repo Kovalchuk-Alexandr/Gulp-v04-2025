@@ -17,12 +17,13 @@ const scss = require("gulp-sass")(require("sass")),
     autoprefixer = require("gulp-autoprefixer"),
     imagemin = require("gulp-imagemin"),
     imageminWebp = require("imagemin-webp"),
+    gulpAvif = require("gulp-avif"),
+    pictureHTML = require("gulp-picture-html"),
     newer = require("gulp-newer"),
     rename = require("gulp-rename"),
     fonter = require("gulp-fonter-fix"),
     ttf2woff = require("gulp-ttf2woff"),
     ttf2woff2 = require("gulp-ttf2woff2");
-
 
 const clean = require("gulp-clean");
 const fs = require("fs");
@@ -38,20 +39,25 @@ const path = {
         html: sourceFolder + "/html/*.html",
         scss: sourceFolder + "/scss/main.scss",
         js: sourceFolder + "/js/*.js",
+        imgAll: [
+            sourceFolder + "/img/**/*.{svg,gif,ico,webp,avif,jpg,png}",
+            // "!" + sourceFolder + "/img/**/*.{jpg,png}",
+        ],
         img: [
             sourceFolder + "/img/**/*.{svg,gif,ico,webp}",
             "!" + sourceFolder + "/img/**/*.{jpg,png}",
             // sourceFolder + "/img/favicons/*.{jpg,png,svg,gif,ico,webp}",
         ],
-        imgFavicons: sourceFolder + "/img/favicons/*.{jpg,png,svg,gif,ico,webp}",
+        imgFavicons:
+            sourceFolder + "/img/favicons/*.{jpg,png,svg,gif,ico,webp}",
         imgWebp: [
             sourceFolder + "/img/**/*.{jpg,png}",
-            "!" + sourceFolder + "/img/favicons/*"
+            "!" + sourceFolder + "/img/favicons/*",
         ],
         fonts: sourceFolder + "/fonts/**/",
     },
     build: {
-        html: buildFolder ,
+        html: buildFolder,
         styles: buildFolder + "/css/",
         js: buildFolder + "/js/",
         img: buildFolder + "/img/",
@@ -85,9 +91,18 @@ const fileIncludeSetting = {
 };
 
 /* ***************  HTML  ************************* */
+const pictureHTMLConfig = {
+    // options below default:
+    extensions: [".jpg", ".png", ".jpeg"], // image file extensions for which we create 'picture'
+    source: [".avif", ".webp"], // create 'source' with these formats
+    noPicture: ["no-picture"], // if we find this class for the 'img' tag, then we don't create a 'picture' (multiple classes can be set)
+    noPictureDel: false, // if 'true' remove classes for 'img' tag given in 'noSource:[]'
+};
+
 function html() {
     return src(path.source.html)
         .pipe(fileInclude(fileIncludeSetting))
+        .pipe(pictureHTML(pictureHTMLConfig))
         .pipe(dest(path.build.html))
         .pipe(browserSync.stream());
 }
@@ -119,11 +134,13 @@ function styles() {
 /* ***************  Scripts  ************************ */
 function scripts() {
     return (
-        src([
-            path.source.js,
-            // './src/lib/scrollreveal.js'
-        ],
-            { sourcemaps: true })
+        src(
+            [
+                path.source.js,
+                // './src/lib/scrollreveal.js'
+            ],
+            { sourcemaps: true }
+        )
             // .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(concat("main.min.js"))
@@ -149,6 +166,17 @@ function images(done) {
             })
         )
         .pipe(dest(path.build.img + "/favicons/"))
+        // Avif
+        .pipe(src(path.source.imgWebp, { encoding: false }))
+        .pipe(newer(path.build.img))
+        .pipe(
+            gulpAvif({
+                quality: 70,
+            })
+        )
+        // .pipe(rename({ extname: ".webp" }))
+        .pipe(dest(path.build.img))
+        // Webp
         .pipe(src(path.source.imgWebp, { encoding: false }))
         .pipe(newer(path.build.img))
         // .pipe(imagemin([imagemin.jpegtran({ progressive: true })]))
@@ -161,18 +189,16 @@ function images(done) {
         )
         .pipe(rename({ extname: ".webp" }))
         .pipe(dest(path.build.img))
-        .pipe(src(path.source.img, { encoding: false }))
+        .pipe(src(path.source.imgAll, { encoding: false }))
         .pipe(
-            imagemin(
-                {
-                    verbose: true,
-                    progressive: true,
-                    optimizationLevel: 5,
-                    quality: 85,
-                }
-            )
+            imagemin({
+                verbose: true,
+                progressive: true,
+                optimizationLevel: 5,
+                quality: 85,
+            })
         )
-        .pipe(dest(path.build.img))
+        .pipe(dest(path.build.img));
     done();
 }
 

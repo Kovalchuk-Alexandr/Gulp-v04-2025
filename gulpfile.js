@@ -19,6 +19,7 @@ const scss = require("gulp-sass")(require("sass")),
     imageminWebp = require("imagemin-webp"),
     gulpAvif = require("gulp-avif"),
     pictureHTML = require("gulp-picture-html"),
+    svgsprite = require("gulp-svg-sprite"),
     newer = require("gulp-newer"),
     rename = require("gulp-rename"),
     fonter = require("gulp-fonter-fix"),
@@ -41,6 +42,7 @@ const path = {
         js: sourceFolder + "/js/*.js",
         imgAll: [
             sourceFolder + "/img/**/*.{svg,gif,ico,webp,avif,jpg,png}",
+            "!" + sourceFolder + "/**/favicons/*.*",
             // "!" + sourceFolder + "/img/**/*.{jpg,png}",
         ],
         img: [
@@ -52,8 +54,9 @@ const path = {
             sourceFolder + "/img/favicons/*.{jpg,png,svg,gif,ico,webp}",
         imgWebp: [
             sourceFolder + "/img/**/*.{jpg,png}",
-            "!" + sourceFolder + "/img/favicons/*",
+            "!" + sourceFolder + "/**/favicons/*",
         ],
+        sprite: buildFolder + "/img/**/*.svg",
         fonts: sourceFolder + "/fonts/**/",
     },
     build: {
@@ -61,6 +64,7 @@ const path = {
         styles: buildFolder + "/css/",
         js: buildFolder + "/js/",
         img: buildFolder + "/img/",
+        sprite: buildFolder + "/img/svgsprite/",
         fonts: buildFolder + "/fonts/",
     },
     watch: {
@@ -154,9 +158,11 @@ function scripts() {
 }
 
 /* ***************  Imagess  ************************ */
-function images(done) {
-    src(path.source.imgFavicons, { encoding: false })
-        .pipe(newer(path.build.img))
+// favicon обрабатываем отдельно т.к. в пайпе с images дублируются изображения
+function favicon() {
+    // Обрабатываем только favicon
+    return src(path.source.imgFavicons, { encoding: false })
+        .pipe(newer(path.build.img + "favicons/"))
         .pipe(
             imagemin({
                 verbose: true,
@@ -165,47 +171,109 @@ function images(done) {
                 quality: 85,
             })
         )
-        .pipe(dest(path.build.img + "/favicons/"))
-        // Avif
-        .pipe(src(path.source.imgWebp, { encoding: false }))
-        .pipe(newer(path.build.img))
-        .pipe(
-            gulpAvif({
-                quality: 70,
-            })
-        )
-        // .pipe(rename({ extname: ".webp" }))
-        .pipe(dest(path.build.img))
-        // Webp
-        .pipe(src(path.source.imgWebp, { encoding: false }))
-        .pipe(newer(path.build.img))
-        // .pipe(imagemin([imagemin.jpegtran({ progressive: true })]))
-        .pipe(
-            imagemin([
-                imageminWebp({
+        .pipe(dest(path.build.img + "favicons/"));
+}
+
+function images() {
+    return (
+        src(path.source.imgWebp, { encoding: false })
+            // Обрботка Avif
+            // .pipe(src(path.source.imgWebp, { encoding: false }))
+            .pipe(newer(path.build.img))
+            .pipe(gulpAvif({ quality: 80 }))
+            .pipe(dest(path.build.img))
+
+            // Обработка Webp
+            .pipe(src(path.source.imgWebp, { encoding: false }))
+            .pipe(newer(path.build.img))
+            .pipe(
+                imagemin([
+                    imageminWebp({
+                        quality: 85,
+                    }),
+                ])
+            )
+            .pipe(rename({ extname: ".webp" }))
+            .pipe(dest(path.build.img))
+
+            // Обработка всех остальных изображений
+            // Чтобы копировать в './docs/img' только avif, webp - заменить путь на 'path.source.img'
+            .pipe(src(path.source.imgAll, { encoding: false }))
+            .pipe(newer(path.build.img))
+            .pipe(
+                imagemin({
+                    verbose: true,
+                    progressive: true,
+                    optimizationLevel: 5,
                     quality: 85,
-                }),
-            ])
-        )
-        .pipe(rename({ extname: ".webp" }))
-        .pipe(dest(path.build.img))
-        .pipe(src(path.source.imgAll, { encoding: false }))
-        .pipe(
-            imagemin({
-                verbose: true,
-                progressive: true,
-                optimizationLevel: 5,
-                quality: 85,
-            })
-        )
-        .pipe(dest(path.build.img));
-    done();
+                })
+            )
+            .pipe(dest(path.build.img))
+    );
+}
+
+const img = series(favicon, images);
+
+const svgStack = {
+    mode: {
+        stack: {
+            sprite: "../sprite.stack.svg",
+            example: true,
+        },
+    },
+    shape: {
+        transform: [
+            {
+                svgo: {
+                    js2svg: { indent: 4, pretty: true },
+                },
+            },
+        ],
+    },
+};
+
+const svgSymbol = {
+    mode: {
+        symbol: {
+            sprite: "../sprite.symbol.svg",
+        },
+    },
+    shape: {
+        transform: [
+            {
+                svgo: {
+                    js2svg: { indent: 4, pretty: true },
+                    plugins: [
+                        {
+                            name: "removeAttrs",
+                            params: {
+                                attrs: "(fill|stroke)",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
+};
+
+function sprite() {
+    return src(path.source.sprite)
+        .pipe(svgsprite(svgSymbol))
+        .pipe(dest(path.build.sprite));
+}
+
+function stack() {
+    return src(path.source.sprite)
+        .pipe(svgsprite(svgStack))
+        .pipe(dest(path.build.sprite));
 }
 
 /* ***************  Fonts  ************************ */
 const copyWoff = () => {
-    return src(path.source.fonts + "*.{woff,woff2}")
-        .pipe(dest(path.build.fonts))
+    return src(path.source.fonts + "*.{woff,woff2}").pipe(
+        dest(path.build.fonts)
+    );
 };
 
 const otf2ttf = () => {
@@ -220,8 +288,8 @@ const otf2ttf = () => {
 
 const ttfToWoff = () => {
     src(path.source.fonts + "*.ttf", {
-      encoding: false, // Important!
-      removeBOM: false
+        encoding: false, // Important!
+        removeBOM: false,
     })
         .pipe(ttf2woff())
         .pipe(dest(path.build.fonts))
@@ -236,7 +304,7 @@ const fontsStyle = (done) => {
     // Файл стилей подключения шрифтов
     let fontsFile = `${sourceFolder}/scss/base/_fontsAutoGen.scss`;
     // Проверяем существуют ли файлы шрифтов
-    fs.readdir(`${buildFolder}/fonts/`, function(err, fontsFiles) {
+    fs.readdir(`${buildFolder}/fonts/`, function (err, fontsFiles) {
         if (fontsFiles) {
             // Проверяем существует ли файл стилей для подключения шрифтов
             // Если файла нет, создаем его
@@ -250,9 +318,7 @@ const fontsStyle = (done) => {
                         ? fontFileName.split("-")[0]
                         : fontFileName;
                     let fontStyle =
-                        fontFileName
-                            .toLowerCase()
-                            .search("italic") != -1
+                        fontFileName.toLowerCase().search("italic") != -1
                             ? "italic"
                             : "normal";
                     let fontWeight = fontFileName.split("-")[1]
@@ -270,8 +336,10 @@ const fontsStyle = (done) => {
                         fontWeight = 600;
                     } else if (fontWeight.toLowerCase() === "bold") {
                         fontWeight = 700;
-                    } else if (fontWeight.toLowerCase() === "extrabold" ||
-                        fontWeight.toLowerCase() === "heavy") {
+                    } else if (
+                        fontWeight.toLowerCase() === "extrabold" ||
+                        fontWeight.toLowerCase() === "heavy"
+                    ) {
                         fontWeight = 800;
                     } else if (fontWeight.toLowerCase() === "black") {
                         fontWeight = 900;
@@ -293,18 +361,15 @@ const fontsStyle = (done) => {
     // function cb() {}
 };
 
-
-
 const fonts = series(otf2ttf, ttfToWoff, copyWoff, fontsStyle);
-
 
 function watching() {
     // watch(path.watch.html, html)
     watch(path.watch.fonts, series(otf2ttf, ttfToWoff, copyWoff, fontsStyle));
-    watch(path.watch.styles, styles)
-    watch(path.watch.js, scripts)
+    watch(path.watch.styles, styles);
+    watch(path.watch.js, scripts);
     watch(path.watch.html, html).on("change", browserSync.reload);
-    watch(path.watch.img, images);
+    watch(path.watch.img, img);
 }
 
 // Удаление build
@@ -321,7 +386,15 @@ function cleanbuild() {
  * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
  */
 
-const build = series(cleanbuild, parallel(styles, scripts, images), html, otf2ttf, ttfToWoff, copyWoff, fontsStyle);
+const build = series(
+    cleanbuild,
+    parallel(styles, scripts, img),
+    html,
+    otf2ttf,
+    ttfToWoff,
+    copyWoff,
+    fontsStyle
+);
 // const watch = gulp.series(build, watching, browser_sync);
 
 /* Exports Tasks */
@@ -330,6 +403,8 @@ exports.html = html;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.images = images;
+exports.img = img;
+exports.favicon = favicon;
 exports.build = build;
 exports.watching = watching;
 exports.cleanbuild = cleanbuild;
@@ -337,6 +412,9 @@ exports.fonts = fonts;
 exports.otf2ttf = otf2ttf;
 exports.ttfToWoff = ttfToWoff;
 exports.fontsStyle = fontsStyle;
-exports.default = series(build, parallel(browser_sync, watching)) ;
+exports.default = series(build, parallel(browser_sync, watching));
+
+exports.sprite = sprite;
+exports.stack = stack;
 
 // exports.default = parallel(styles, scripts, browsersync, watching);

@@ -48,11 +48,13 @@ gulp build
 ##### Images
 
 Обязательно добавить `{ encoding: false }` в путь источника, т.к. начиная с GULP 5.0 изображение по-умолчанию передается текстовой строкой
-```.pipe(src(path.source.img, { encoding: false }))```
+`.pipe(src(path.source.img, { encoding: false }))`
 
->[`gulp-picture-html`](https://github.com/WpWebr/gulp-picture-html) - расширение для Gulp, заменит элемент html `<img>` на `<picture>`
+[`gulp-picture-html`](https://github.com/WpWebr/gulp-picture-html) - расширение для Gulp, заменит элемент html `<img>` на `<picture>`
 
-###### Например 
+
+###### Например
+
 ```
 // Изменяет тэг 'img'
   <img src="img/image.jpg" alt="image">
@@ -75,5 +77,11 @@ const pictureHTMLConfig = {
     noPictureDel: true
 };
 ```
+
+##### Svg Sprite
+
+Собирает svg в './docs/img/svgsprite'
+`gulp sprite` - в 'sprite.symbol.svg'
+`gulp stack` - в 'sprite.stack.svg'
 
 [GitHub сборка:](https://github.com/Kovalchuk-Alexandr/Gulp-v04-2025.git)

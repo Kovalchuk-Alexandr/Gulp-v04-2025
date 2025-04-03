@@ -180,16 +180,16 @@ legend {
   font-style: normal;
 }
 @font-face {
-  font-family: gilroy;
+  font-family: Firasans;
   font-display: swap;
-  src: url("../fonts/gilroy.woff2") format("woff2"), url("../fonts/gilroy.woff") format("woff");
+  src: url("../fonts/Firasans-Book.woff2") format("woff2"), url("../fonts/Firasans-Book.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
-  font-family: Firasans;
+  font-family: gilroy;
   font-display: swap;
-  src: url("../fonts/Firasans-Book.woff2") format("woff2"), url("../fonts/Firasans-Book.woff") format("woff");
+  src: url("../fonts/gilroy.woff2") format("woff2"), url("../fonts/gilroy.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
@@ -203,15 +203,15 @@ legend {
 @font-face {
   font-family: Inter;
   font-display: swap;
-  src: url("../fonts/Inter-Regular.woff2") format("woff2"), url("../fonts/Inter-Regular.woff") format("woff");
-  font-weight: 400;
+  src: url("../fonts/Inter-Medium.woff2") format("woff2"), url("../fonts/Inter-Medium.woff") format("woff");
+  font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: Inter;
   font-display: swap;
-  src: url("../fonts/Inter-Medium.woff2") format("woff2"), url("../fonts/Inter-Medium.woff") format("woff");
-  font-weight: 500;
+  src: url("../fonts/Inter-Regular.woff2") format("woff2"), url("../fonts/Inter-Regular.woff") format("woff");
+  font-weight: 400;
   font-style: normal;
 }
 @font-face {
@@ -224,16 +224,16 @@ legend {
 @font-face {
   font-family: Montserrat;
   font-display: swap;
-  src: url("../fonts/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
+  src: url("../fonts/Montserrat-Bold-Italic.woff2") format("woff2"), url("../fonts/Montserrat-Bold-Italic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
 }
 @font-face {
   font-family: Montserrat;
   font-display: swap;
-  src: url("../fonts/Montserrat-Bold-Italic.woff2") format("woff2"), url("../fonts/Montserrat-Bold-Italic.woff") format("woff");
-  font-weight: 700;
-  font-style: italic;
+  src: url("../fonts/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
 @font-face {
   font-family: Montserrat;
@@ -252,15 +252,15 @@ legend {
 @font-face {
   font-family: Poppins;
   font-display: swap;
-  src: url("../fonts/Poppins-Regular.woff2") format("woff2"), url("../fonts/Poppins-Regular.woff") format("woff");
-  font-weight: 400;
+  src: url("../fonts/Poppins-SemiBold.woff2") format("woff2"), url("../fonts/Poppins-SemiBold.woff") format("woff");
+  font-weight: 600;
   font-style: normal;
 }
 @font-face {
   font-family: Poppins;
   font-display: swap;
-  src: url("../fonts/Poppins-SemiBold.woff2") format("woff2"), url("../fonts/Poppins-SemiBold.woff") format("woff");
-  font-weight: 600;
+  src: url("../fonts/Poppins-Regular.woff2") format("woff2"), url("../fonts/Poppins-Regular.woff") format("woff");
+  font-weight: 400;
   font-style: normal;
 }
 html {

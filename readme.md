@@ -14,17 +14,20 @@
 - Возможность указать каталог сборки build / docs (по-умолчанию docs)
 
 ##### Установить зависимости:
-```
+
+```bash
 npm i
 ```
 
 ##### Зпустить в режиме разработки:
-```
+
+```bash
 gulp
 ```
 
 ##### Собрать версию для публикации:
-```
+
+```bash
 gulp build
 ```
 
@@ -34,6 +37,7 @@ gulp build
 
 Все шрифты автоматически собираются в "src\scss\base\_fontsAutoGen.scss".
 При этом, важно! Название - плотность - курсив разделять пробелами
+
 - `Montserrat-Bold-Italic.ttf`
 - `Inter-Regular.ttf`
 
@@ -52,15 +56,14 @@ gulp build
 
 [`gulp-picture-html`](https://github.com/WpWebr/gulp-picture-html) - расширение для Gulp, заменит элемент html `<img>` на `<picture>`
 
-
 ###### Например
 
-```
+```html
 // Изменяет тэг 'img'
   <img src="img/image.jpg" alt="image">
-``` 
-
 ```
+
+```html
 // на 'picture'
 <picture>
     <source srcset="img/image.avif" type="image/avif">
@@ -72,7 +75,7 @@ gulp build
 Чтобы не делать преобразование - добавить `class="no-picture"` к тэгу `<img>`
 Убрать все  `class="no-picture"` из тэгов `<img>` - установить в `gulpfile.js`:
 
-```
+```js
 const pictureHTMLConfig = {
     noPictureDel: true
 };
@@ -85,3 +88,19 @@ const pictureHTMLConfig = {
 `gulp stack` - в 'sprite.stack.svg'
 
 [GitHub сборка:](https://github.com/Kovalchuk-Alexandr/Gulp-v04-2025.git)
+
+##### Webpack
+
+При подключении `fancybox: import { Fancybox } from '@fancyapps/ui';`
+выдавало ошибку `error in entrypoint size limit`
+Лечение: поправить размер лимитов в `webpack.config.js`
+
+```js
+performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    },
+```
+
+[Решение (https://www.youtube.com/watch?v=9ZE6RSEoFTI):](https://www.youtube.com/watch?v=9ZE6RSEoFTI)

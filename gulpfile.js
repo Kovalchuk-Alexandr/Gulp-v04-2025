@@ -56,7 +56,10 @@ const path = {
             sourceFolder + "/img/**/*.{jpg,png}",
             "!" + sourceFolder + "/**/favicons/*",
         ],
-        sprite: buildFolder + "/img/**/*.svg",
+        imgVideo: [
+            sourceFolder + "/img/**/*.{mp4,avi,mov}"
+        ],
+        sprite: sourceFolder + "/img/**/*.svg",
         fonts: sourceFolder + "/fonts/**/",
     },
     build: {
@@ -71,7 +74,8 @@ const path = {
         html: sourceFolder + "/**/*.html",
         styles: sourceFolder + "/scss/**/*.scss",
         js: sourceFolder + "/js/**/*.js",
-        img: sourceFolder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
+        img: sourceFolder + "/img/**/*",
+        // img: sourceFolder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
         fonts: sourceFolder + "/fonts/**/*",
     },
 };
@@ -99,6 +103,7 @@ const pictureHTMLConfig = {
     // options below default:
     extensions: [".jpg", ".png", ".jpeg"], // image file extensions for which we create 'picture'
     source: [".avif", ".webp"], // create 'source' with these formats
+    // source: [".webp", ".avif"], // create 'source' with these formats
     noPicture: ["no-picture"], // if we find this class for the 'img' tag, then we don't create a 'picture' (multiple classes can be set)
     noPictureDel: false, // if 'true' remove classes for 'img' tag given in 'noSource:[]'
 };
@@ -147,7 +152,7 @@ function scripts() {
         )
             // .pipe(sourcemaps.init())
             .pipe(uglify())
-            .pipe(concat("main.min.js"))
+            // .pipe(concat("main.min.js"))
             .pipe(sourcemaps.write()) // Inline source maps.
             // For external source map file:
             //.pipe(sourcemaps.write("./maps")) // In this case: lib/maps/bundle.min.js.map
@@ -168,7 +173,7 @@ function favicon() {
                 verbose: true,
                 progressive: true,
                 optimizationLevel: 5,
-                quality: 85,
+                quality: 80,
             })
         )
         .pipe(dest(path.build.img + "favicons/"));
@@ -180,7 +185,7 @@ function images() {
             // Обрботка Avif
             // .pipe(src(path.source.imgWebp, { encoding: false }))
             .pipe(newer(path.build.img))
-            .pipe(gulpAvif({ quality: 80 }))
+            .pipe(gulpAvif({ quality: 85,     speed: 7, }))
             .pipe(dest(path.build.img))
 
             // Обработка Webp
@@ -208,6 +213,11 @@ function images() {
                     quality: 85,
                 })
             )
+            .pipe(dest(path.build.img))
+
+            // Копирование видео
+            .pipe(src(path.source.imgVideo, { encoding: false }))
+            .pipe(newer(path.build.img))
             .pipe(dest(path.build.img))
     );
 }
@@ -370,6 +380,7 @@ function watching() {
     watch(path.watch.js, scripts);
     watch(path.watch.html, html).on("change", browserSync.reload);
     watch(path.watch.img, img);
+    watch(path.source.sprite, parallel(sprite, stack));
 }
 
 // Удаление build
@@ -388,7 +399,7 @@ function cleanbuild() {
 
 const build = series(
     cleanbuild,
-    parallel(styles, scripts, img),
+    parallel(styles, scripts, img, sprite, stack),
     html,
     otf2ttf,
     ttfToWoff,

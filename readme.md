@@ -33,7 +33,8 @@ gulp build
 
 #### Fonts
 
-Конвертация шрифтов OTF->TTF, TTF->WOFF, WOFF->WOFF2 с копией в `src/fonts`. Если, только WOFF/Woff2 - копируются в `build`
+Конвертация шрифтов OTF->TTF, TTF->WOFF, WOFF->WOFF2 с копией в `src/fonts`.
+Если, только WOFF/Woff2 - копируются в `build`
 
 Все шрифты автоматически собираются в "src\scss\base\_fontsAutoGen.scss".
 При этом, важно! Название - плотность - курсив разделять пробелами
@@ -54,7 +55,7 @@ gulp build
 Обязательно добавить `{ encoding: false }` в путь источника, т.к. начиная с GULP 5.0 изображение по-умолчанию передается текстовой строкой
 `.pipe(src(path.source.img, { encoding: false }))`
 
-[`gulp-picture-html`](https://github.com/WpWebr/gulp-picture-html) - расширение для Gulp, заменит элемент html `<img>` на `<picture>`
+[`gulp-picture-html`](https://github.com/WpWebr/gulp-picture-html) - расширение для Gulp, создает для html `<img>` стэк `<picture>`
 
 ###### Например
 
@@ -77,7 +78,10 @@ gulp build
 
 ```js
 const pictureHTMLConfig = {
-    noPictureDel: true
+    extensions: [".jpg", ".png", ".jpeg"], // image file extensions for which we create 'picture'
+    source: [".avif", ".webp"], // create 'source' with these formats
+    noPicture: ["no-picture"], // if we find this class for the 'img' tag, then we don't create a 'picture' (multiple classes can be set)
+    noPictureDel: false, // if 'true' remove classes for 'img' tag given in 'noSource:[]'
 };
 ```
 

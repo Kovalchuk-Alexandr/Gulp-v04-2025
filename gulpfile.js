@@ -22,6 +22,7 @@ const scss = require("gulp-sass")(require("sass")),
     svgsprite = require("gulp-svg-sprite"),
     newer = require("gulp-newer"),
     rename = require("gulp-rename"),
+    replace = require("gulp-replace"),
     fonter = require("gulp-fonter-fix"),
     ttf2woff = require("gulp-ttf2woff"),
     ttf2woff2 = require("gulp-ttf2woff2");
@@ -112,6 +113,12 @@ function html() {
     return src(path.source.html)
         .pipe(fileInclude(fileIncludeSetting))
         .pipe(pictureHTML(pictureHTMLConfig))
+        .pipe(
+            replace(
+                /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
+                '$1./$4$5$7$1'
+            )
+        )
         .pipe(dest(path.build.html))
         .pipe(browserSync.stream());
 }
@@ -358,7 +365,7 @@ const fontsStyle = (done) => {
                     }
                     fs.appendFile(
                         fontsFile,
-                        `@font-face {\n\tfont-family: ${fontName};\n\tfont-display: swap;\n\tsrc: url("../fonts/${fontFileName}.woff2") format("woff2"), url("../fonts/${fontFileName}.woff") format("woff");\n\tfont-weight: ${fontWeight};\n\tfont-style: ${fontStyle};\n}\r\n`,
+                        `@font-face {\n\tfont-family: ${fontName};\n\tfont-display: swap;\n\tsrc: url("./fonts/${fontFileName}.woff2") format("woff2"), url("./fonts/${fontFileName}.woff") format("woff");\n\tfont-weight: ${fontWeight};\n\tfont-style: ${fontStyle};\n}\r\n`,
                         cb
                     );
                     newFileOnly = fontFileName;

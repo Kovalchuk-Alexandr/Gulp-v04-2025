@@ -186,7 +186,7 @@ function favicon() {
         .pipe(dest(path.build.img + "favicons/"));
 }
 
-function images() {
+function images(done) {
     return (
         src(path.source.imgWebp, { encoding: false })
             // Обрботка Avif
@@ -223,13 +223,23 @@ function images() {
             .pipe(dest(path.build.img))
 
             // Копирование видео
-            .pipe(src(path.source.imgVideo, { encoding: false }))
+            // .pipe(src(path.source.imgVideo, { encoding: false }))
+            // .pipe(src(path.source.imgVideo))
+            // .pipe(newer(path.build.img))
+            // .pipe(dest(path.build.img))
+    );
+}
+
+function video() {
+    return (
+        // Копирование видео
+        src(path.source.imgVideo, { encoding: false })
             .pipe(newer(path.build.img))
             .pipe(dest(path.build.img))
     );
 }
 
-const img = series(favicon, images);
+const img = parallel(series(favicon, images), video);
 
 const svgStack = {
     mode: {
@@ -406,7 +416,7 @@ function cleanbuild() {
 
 const build = series(
     cleanbuild,
-    parallel(styles, scripts, img, sprite, stack),
+    parallel(styles, scripts, favicon, images, video, sprite, stack),
     html,
     otf2ttf,
     ttfToWoff,
@@ -423,6 +433,7 @@ exports.scripts = scripts;
 exports.images = images;
 exports.img = img;
 exports.favicon = favicon;
+exports.video = video;
 exports.build = build;
 exports.watching = watching;
 exports.cleanbuild = cleanbuild;
